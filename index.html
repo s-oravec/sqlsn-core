@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="sqlsn-core : sqlsn core module">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>sqlsn-core</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/principal-engineering/sqlsn-core">View on GitHub</a>
+
+          <h1 id="project_title">sqlsn-core</h1>
+          <h2 id="project_tagline">sqlsn core module</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/principal-engineering/sqlsn-core/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/principal-engineering/sqlsn-core/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="idea" class="anchor" href="#idea" aria-hidden="true"><span class="octicon octicon-link"></span></a>Idea</h1>
+
+<p><strong>SQLSN</strong> should be simple Oracle SQL*Plus library of scripts, which make SQL*Plus a little bit more comfortable.</p>
+
+<p>It is a collection of scripts, which I tend to write all over again on each new project. Scripts for managing connections, environments, various action scripts, calling scripts organized in directory structure and so on ...</p>
+
+<h2>
+<a id="goals" class="anchor" href="#goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goals</h2>
+
+<ul>
+<li>pure SQL*Plus, at least I will try </li>
+<li>simple core</li>
+<li>organize scripts in reusable, ideally self-contained modules, with loosely coupled dependencies</li>
+<li>document and test everything</li>
+</ul>
+
+<h2>
+<a id="module" class="anchor" href="#module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Module</h2>
+
+<h3>
+<a id="should" class="anchor" href="#should" aria-hidden="true"><span class="octicon octicon-link"></span></a>Should</h3>
+
+<ul>
+<li>have its own repository</li>
+<li>be self-contained in directory which can be put in <code>sqlsn_modules</code> without breaking anything</li>
+<li>be well documented and tested</li>
+</ul>
+
+<h3>
+<a id="defines" class="anchor" href="#defines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defines</h3>
+
+<ul>
+<li>module variables named <code>g_&lt;module_name&gt;_%</code> - other modules may depend on them</li>
+<li>module command scripts named <code>&lt;module_name&gt;_&lt;command&gt;</code> - scripts stored in <code>&lt;module_name&gt;/lib</code> implementing commands</li>
+</ul>
+
+<h3>
+<a id="uses" class="anchor" href="#uses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uses</h3>
+
+<ul>
+<li>module variables and command scripts defined by other modules</li>
+<li>directory <code>lib/tmp</code> for on-the-fly created and executed SQL*Plus scripts which implement missing language constructs</li>
+</ul>
+
+<h2>
+<a id="feature-roadmap" class="anchor" href="#feature-roadmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature roadmap</h2>
+
+<p><strong>Core and near-core modules which do not need connection to database</strong></p>
+
+<ul>
+<li>sqlsn-core - [done]</li>
+<li>sqlsn-stack - module implementing stack [done]</li>
+<li>sqlsn-log - module implementing simple logging into file [in progress]</li>
+<li>sqlsn-run - module implementing runing scripts/directory trees of scripts [done]</li>
+</ul>
+
+<p><strong>Modules that manage connections</strong></p>
+
+<ul>
+<li>sqlsn-conn - module for connection configurations [in design phase]</li>
+<li>sqlsn-env - module for environment definitions [in design phase]</li>
+<li>sqlsn-log-db - logging into database [in design phase]</li>
+</ul>
+
+<p><strong>"Music of the Future (word-by-word translation from czech/slovak ;)"</strong></p>
+
+<ul>
+<li>module repository with 
+
+<ul>
+<li>declarative module dependency</li>
+<li>(multi)platform (in)dependant scripts that can pull modules from repository</li>
+</ul>
+</li>
+</ul>
+
+<h1>
+<a id="sqlsn---core" class="anchor" href="#sqlsn---core" aria-hidden="true"><span class="octicon octicon-link"></span></a>SQLSN - core</h1>
+
+<p>This is the core module - heart of <strong>SQLSN</strong>. Über-simple heart. At least it starts as simple ;) We'll see.</p>
+
+<h1>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p>Module name is <code>sqlsn</code> so in "applications" written using SQLSN substitution variables starting with <code>g_sqlsn</code> or <code>sqlsn</code> should be avoided.</p>
+
+<h2>
+<a id="initialize-module" class="anchor" href="#initialize-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Initialize module</h2>
+
+<p>Initialize SQLSN core module prior any usage.</p>
+
+<pre><code>prompt tell SQLSN core where it is located regarding to THE-SCRIPT
+@&lt;path_to_sqlsn_core&gt;/module.sql &lt;path_to_sqlsn_core&gt;
+</code></pre>
+
+<p>e.g.:</p>
+
+<pre><code>--in THE-SCRIPT test/test.sql
+@../module.sql ".."
+
+</code></pre>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Requirements</h2>
+
+<h3>
+<a id="g_sqlsn_modules_path" class="anchor" href="#g_sqlsn_modules_path" aria-hidden="true"><span class="octicon octicon-link"></span></a>g_sqlsn_modules_path</h3>
+
+<p>Path to SQLSN modules from THE-SCRIPT. Set it in some <code>sqlsnrc.sql</code> script. (Example can be found in <code>test</code>)</p>
+
+<h2>
+<a id="globals" class="anchor" href="#globals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Globals</h2>
+
+<p>Globals defined by core module</p>
+
+<h3>
+<a id="g_sqlsn_path" class="anchor" href="#g_sqlsn_path" aria-hidden="true"><span class="octicon octicon-link"></span></a>g_sqlsn_path</h3>
+
+<p>Path to SQLSN core from THE-SCRIPT. It is set in <code>module.sql</code> script during initilization of sqlsn-core.</p>
+
+<h2>
+<a id="module-command-scripts" class="anchor" href="#module-command-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Module command scripts</h2>
+
+<p>Command scripts provided by the core module. Path to the script is stored in substition variable, so calling is pretty simple:</p>
+
+<pre><code>@&amp;&amp;&lt;module_name&gt;_&lt;command&gt;
+</code></pre>
+
+<h3>
+<a id="sqslsn_require" class="anchor" href="#sqslsn_require" aria-hidden="true"><span class="octicon octicon-link"></span></a>sqslsn_require</h3>
+
+<p>Loads required module. If modules are placed somwhere else, as default <code>g_sqlsn_modules_path</code> than override <code>g_sqlsn_modules_path</code> manually.</p>
+
+<pre><code>@&amp;&amp;sqlsn_require &lt;module_name&gt;
+</code></pre>
+
+<h3>
+<a id="sqslsn_require_from_path" class="anchor" href="#sqslsn_require_from_path" aria-hidden="true"><span class="octicon octicon-link"></span></a>sqslsn_require_from_path</h3>
+
+<p>Loads required module from path.</p>
+
+<pre><code>@&amp;&amp;sqlsn_require_from_path "&lt;path/module_name&gt;"
+</code></pre>
+
+<h3>
+<a id="sqlsn_noop" class="anchor" href="#sqlsn_noop" aria-hidden="true"><span class="octicon octicon-link"></span></a>sqlsn_noop</h3>
+
+<p>No op command - use it as mock for functionality that is currently not implemented.</p>
+
+<pre><code>define future_command = &amp;&amp;sqlsn_noop
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">sqlsn-core maintained by <a href="https://github.com/principal-engineering">principal-engineering</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
