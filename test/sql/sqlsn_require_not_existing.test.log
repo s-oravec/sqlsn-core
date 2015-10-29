@@ -1,0 +1,12 @@
+
+* case [require of nonexistent module should fail]
+skipped
+try to load module bar which does not exist
+should exit SQL*Plus with rollback and exitCode 1
+Loading required module [bar]
+
+Error starting at line : 9 File @ file:/Users/stiivo/projects/s-oravec/sqlsn-core/test/sql/../../lib/command/sqlsn_require.sql
+In command -
+@&&g_sqlsn_modules_path./&&l_module_name./module.sql "&&g_sqlsn_modules_path./&&l_module_name"
+Error report -
+SP2-0310: Unable to open file: "sqlsn_modules/bar/module.sql"

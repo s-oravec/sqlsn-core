@@ -1,0 +1,8 @@
+
+* case [required module should load]
+require module foo
+Loading required module [foo]
+Loading module [foo] at path "sqlsn_modules/foo"
+.. Command foo_bar defined
+.. done
+- command foo_bar [sqlsn_modules/foo/lib/bar.sql] should be defined

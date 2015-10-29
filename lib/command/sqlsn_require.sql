@@ -4,7 +4,8 @@
 define l_module_name = "&1"
 
 prompt Loading required module [&&l_module_name]
-whenever oserror exit rollback
+whenever oserror exit 1 rollback
+whenever oserror exit 1
 @&&g_sqlsn_modules_path./&&l_module_name./module.sql "&&g_sqlsn_modules_path./&&l_module_name"
 whenever oserror continue
 
