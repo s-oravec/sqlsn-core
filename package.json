@@ -1,8 +1,7 @@
 {
   "name": "sqlsn-core",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "SQLSN Core",
-  "main": "module.sql",
   "directories": {
     "test": "test"
   },
@@ -16,7 +15,7 @@
   "keywords": [
     "SQLSN",
     "SQL",
-    "SQL+Plus",
+    "SQL*Plus",
     "Oracle"
   ],
   "author": "Štefan Oravec <stefan.oravec@me.com>",
