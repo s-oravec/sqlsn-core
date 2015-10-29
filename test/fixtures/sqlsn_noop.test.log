@@ -1,0 +1,4 @@
+
+* noop should do nothing
+call noop
+see? nothing

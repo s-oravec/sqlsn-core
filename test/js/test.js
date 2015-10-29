@@ -50,6 +50,17 @@ describe('SQLSN Core', function() {
     });
   });
 
+  it('sqlsn_noop should do nothing', function() {
+    shell.exec('sql /nolog @sqlsn_noop.test.sql', function(code, output) {
+      code.should.be.equal(1);
+      shell.exec('diff ../fixtures/sqlsn_noop.test.log sqlsn_noop.test.log', function(code, output) {
+        code.should.be.equal(0);
+        output.should.be.equal('');
+        done();
+      });
+    });
+  });
+
   afterEach(function(){
     shell.popd();
   });
