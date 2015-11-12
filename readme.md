@@ -105,7 +105,7 @@ Loads required module. If modules are placed somwhere else, as default `g_sqlsn_
 
 ### sqslsn_require_from_path
 
-Loads required module from path.
+Loads required module from path. Path is relative to `g_sqlsn_path`.
 
 ````
 @&&sqlsn_require_from_path "<path/module_name>"

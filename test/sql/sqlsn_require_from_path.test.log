@@ -1,14 +1,8 @@
 
 * case [require module from path]
 require module sqlsn_modules/foo
-Loading required module from path [sqlsn_modules/foo]
-Loading module [foo] at path "sqlsn_modules/foo"
+Loading required module from path [test/sql/sqlsn_modules/foo]
+Loading module [foo] at path "test/sql/sqlsn_modules/foo"
 .. Command foo_bar defined
 .. done
-- command foo_bar [sqlsn_modules/foo/lib/bar.sql] should be defined
-
-Error starting at line : 13 in command -
-end spool
-Error report -
-Unknown Command
-
+- command foo_bar [test/sql/sqlsn_modules/foo/lib/bar.sql] should be defined
